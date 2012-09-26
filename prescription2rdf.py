@@ -1,4 +1,4 @@
-months = [u"201205"] # to pick out filenames
+months = [u"201110", u"201111", u"201112", u"201201", u"201202", u"201203", u"201204", u"201205"] # to pick out filenames
 rowid = 0 # for autoincrementd URIs
 collate_seen = {} # dict to store URIs to prevent collated data from duplicating
 
@@ -25,6 +25,9 @@ def row2n3(row, thetype, handlers):
 
         if key in handlers:
             value = row[key]
+
+            if len(value) == 0:
+                continue
 
             if handlers[key]['type'] == u"uri":
                 handled_value = u"{0}{1}".format(handlers[key]['uriprefix'], value)
@@ -96,9 +99,9 @@ def read_rows(f, header, thetype, handlers):
 
 for month in months:
     # prescription data
-    iext = u"T{0}PDP IEXT.CSV".format(month)
+    iext = u"T{0}PDP%20IEXT.CSV".format(month)
     # practice data
-    rext = u"T{0}ADD REXT.CSV".format(month)
+    rext = u"T{0}ADD%20REXT.CSV".format(month)
 
     f = open(iext)
 
@@ -120,14 +123,14 @@ for month in months:
 
     handlers = {
         u"NAME": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:name", u"collate_type": u"practice:Practice"},
-        u"ADDRESS": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:name", u"collate_type": u"practice:Practice"},
-        u"ADDRESS2": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:name", u"collate_type": u"practice:Practice"},
-        u"CITY": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:name", u"collate_type": u"practice:Practice"},
-        u"COUNTY": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:name", u"collate_type": u"practice:Practice"},
-        u"POSTCODE": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:name", u"collate_type": u"practice:Practice"},
+        u"ADDRESS": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:address", u"collate_type": u"practice:Practice"},
+        u"ADDRESS2": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:address2", u"collate_type": u"practice:Practice"},
+        u"CITY": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:city", u"collate_type": u"practice:Practice"},
+        u"COUNTY": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:county", u"collate_type": u"practice:Practice"},
+        u"POSTCODE": {u"type": u"value", u"collate": u"PRACTICE", u"collate_predicate": u"practice:postcode", u"collate_type": u"practice:Practice"},
 
-        u"PERIOD": {}, # no predicate mean ignore
-        u"PRACTICE": {},
+        u"PERIOD": {u"type": u"value"}, # no predicate mean ignore
+        u"PRACTICE": {u"type": u"uri", u"uriprefix": "practice:"},
         
     }
 
