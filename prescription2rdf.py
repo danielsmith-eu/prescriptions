@@ -67,13 +67,23 @@ def row2n3(row, thetype, handlers):
 """ Start writing the output with the prefixes.
 
 """
-outf = open("prescription_data_all.n3", "w")
-outf.write(u"@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n")
-outf.write(u"@prefix pres: <http://webbox.ecs.soton.ac.uk/ontology/prescriptions#> .\n")
-outf.write(u"@prefix practice: <http://webbox.ecs.soton.ac.uk/ontology/prescription_practice#> .\n")
-outf.write(u"@prefix pct: <http://webbox.ecs.soton.ac.uk/ontology/prescription_primary_care_trust#> .\n")
-outf.write(u"@prefix bnf: <http://webbox.ecs.soton.ac.uk/ontology/prescription_bnf#> .\n")
-outf.write(u"@prefix : <http://webbox.ecs.soton.ac.uk/ontology/prescription_data#> .\n\n")
+
+file_count = 0
+lines_count = 0
+def open_new_file(filename_template):
+    global file_count
+    file_count += 1
+    filename = filename_template.format(file_count)
+    outf = open(filename, "w")
+    outf = open("prescription_data_all.n3", "w")
+    outf.write(u"@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n")
+    outf.write(u"@prefix pres: <http://webbox.ecs.soton.ac.uk/ontology/prescriptions#> .\n")
+    outf.write(u"@prefix practice: <http://webbox.ecs.soton.ac.uk/ontology/prescription_practice#> .\n")
+    outf.write(u"@prefix pct: <http://webbox.ecs.soton.ac.uk/ontology/prescription_primary_care_trust#> .\n")
+    outf.write(u"@prefix bnf: <http://webbox.ecs.soton.ac.uk/ontology/prescription_bnf#> .\n")
+    outf.write(u"@prefix : <http://webbox.ecs.soton.ac.uk/ontology/prescription_data#> .\n\n")
+    return outf
+
 
 def read_rows(f, header, thetype, handlers):
     global outf
