@@ -1,6 +1,6 @@
 import urllib2, re, os, sys, shutil
 
-src = "http://www.ic.nhs.uk/services/transparency/prescribing-by-gp-practice"
+src = "http://www.ic.nhs.uk/services/transparency/prescribing-by-gp-practice--chemical-level-data"
 link_match = r'<a title="datagov.ic.nhs.uk/T.*?\.CSV" href="(http://datagov.ic.nhs.uk/)(T.*?\.CSV)" target="_blank">'
 
 f = urllib2.urlopen(src)
