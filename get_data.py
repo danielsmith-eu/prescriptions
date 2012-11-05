@@ -7,6 +7,7 @@ f = urllib2.urlopen(src)
 src_page = f.read()
 
 def download_file(url, file_name, f):
+    print "Downloading: {0}".format(url)
     u = urllib2.urlopen(url)
     meta = u.info()
     file_size = int(meta.getheaders("Content-Length")[0])
